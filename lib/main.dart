@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:todolistapp/pages/adicionar_evento_page.dart';
+
 import 'package:todolistapp/pages/evento_page.dart';
 import 'package:todolistapp/pages/tarefa_page.dart';
+import 'package:todolistapp/widgets/butao_custom.dart';
 
  void main() => runApp(MyApp());
 
@@ -27,6 +30,7 @@ import 'package:todolistapp/pages/tarefa_page.dart';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Stack(
         children: <Widget>[
           Container(
@@ -44,7 +48,19 @@ import 'package:todolistapp/pages/tarefa_page.dart';
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                child: AdicionarEventoPage(),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)))
+              ); 
+            }
+          );
+        },
         child: Icon(Icons.add),
         backgroundColor: Color.fromRGBO(250, 30, 78, 1),
       ),
@@ -96,29 +112,23 @@ import 'package:todolistapp/pages/tarefa_page.dart';
     return Row(
       children: <Widget>[
         Expanded(
-          child: MaterialButton(
+          child: ButaoCustom(
             onPressed: () {},
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)),
-            color: Color.fromRGBO(250, 30, 78, 1),
-            textColor: Colors.white,
-            padding: const EdgeInsets.all(14.0),
-            child: Text("Tarefas"),
+            textButao: "Tarefas",
+            cor: Color.fromRGBO(250, 30, 78, 1),
+            textCor: Colors.white,
           ),
         ),
         SizedBox(
           width: 32,
         ),
         Expanded(
-          child: MaterialButton(
+          child: ButaoCustom(
             onPressed: () {},
-            shape: RoundedRectangleBorder(
-                side: BorderSide(color: Theme.of(context).accentColor),
-                borderRadius: BorderRadius.circular(12)),
-            color: Color.fromRGBO(250, 30, 78, 1),
-            textColor: Colors.white,
-            padding: const EdgeInsets.all(14.0),
-            child: Text("Eventos"),
+            textButao: "Eventos",
+            cor: Colors.white,
+            textCor: Color.fromRGBO(250, 30, 78, 1),
+            bordaCor: Color.fromRGBO(250, 30, 78, 1),
           ),
         ),
       ],
