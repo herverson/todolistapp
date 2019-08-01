@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolistapp/widgets/butao_custom.dart';
+import 'package:todolistapp/widgets/textfield_custom.dart';
 
 class AdicionarTarefaPage extends StatefulWidget {
   @override
@@ -23,14 +24,7 @@ class _AdicionarTarefaPageState extends State<AdicionarTarefaPage> {
             SizedBox(
               height: 24,
             ),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                labelText: 'Insira o título'
-              ),
-            ),
+            TextFieldCustom(labelTexto: 'Insira o título'),
             SizedBox(
               height: 24,
             ),
