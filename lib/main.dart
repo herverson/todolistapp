@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:todolistapp/pages/adicionar_evento_page.dart';
+import 'package:todolistapp/pages/adicionar_tarefa_page.dart';
 
 import 'package:todolistapp/pages/evento_page.dart';
 import 'package:todolistapp/pages/tarefa_page.dart';
@@ -27,8 +28,17 @@ import 'package:todolistapp/widgets/butao_custom.dart';
 }
 
  class _MyHomePageState extends State<MyHomePage> {
+   PageController _pageController = PageController();
+
+  double currentPage = 0;
+  
   @override
   Widget build(BuildContext context) {
+     _pageController.addListener(() {
+      setState(() {
+        currentPage = _pageController.page;
+      });
+    });
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Stack(
@@ -40,7 +50,7 @@ import 'package:todolistapp/widgets/butao_custom.dart';
           Positioned(
             right: 0,
             child: Text(
-              "28",
+              "01",
               style: TextStyle(fontSize: 150, color: Color(0x10000000)),
             ),
           ),
@@ -54,7 +64,7 @@ import 'package:todolistapp/widgets/butao_custom.dart';
             context: context,
             builder: (BuildContext context) {
               return Dialog(
-                child: AdicionarEventoPage(),
+                child: currentPage == 1 ? AdicionarEventoPage() : AdicionarTarefaPage(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12)))
               ); 
@@ -85,7 +95,7 @@ import 'package:todolistapp/widgets/butao_custom.dart';
     );
   }
 
-   Column _contentPrincipal(BuildContext context) {
+   Widget _contentPrincipal(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -93,7 +103,7 @@ import 'package:todolistapp/widgets/butao_custom.dart';
         Padding(
           padding: const EdgeInsets.all(24.0),
           child: Text(
-            "Domingo",
+            "Quarta",
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
         ),
@@ -101,7 +111,11 @@ import 'package:todolistapp/widgets/butao_custom.dart';
           padding: const EdgeInsets.all(24.0),
           child: _butao(context),
         ),
-        Expanded(child: EventoPage())
+        Expanded(
+            child: PageView(
+          controller: _pageController,
+          children: <Widget>[TarefaPage(), EventoPage()],
+        ))
       ],
     );
   }
@@ -113,10 +127,19 @@ import 'package:todolistapp/widgets/butao_custom.dart';
       children: <Widget>[
         Expanded(
           child: ButaoCustom(
-            onPressed: () {},
+             onPressed: () {
+            _pageController.previousPage(
+                duration: Duration(milliseconds: 10),
+                curve: Curves.bounceInOut);
+          },
             textButao: "Tarefas",
-            cor: Color.fromRGBO(250, 30, 78, 1),
-            textCor: Colors.white,
+            cor:
+            currentPage < 0.5 ? Color.fromRGBO(250, 30, 78, 1) : Colors.white,
+            textCor:
+            currentPage < 0.5 ? Colors.white : Color.fromRGBO(250, 30, 78, 1),
+            bordaCor: currentPage < 0.5
+              ? Colors.transparent
+              : Color.fromRGBO(250, 30, 78, 1),
           ),
         ),
         SizedBox(
@@ -124,11 +147,19 @@ import 'package:todolistapp/widgets/butao_custom.dart';
         ),
         Expanded(
           child: ButaoCustom(
-            onPressed: () {},
+            onPressed: () {
+              _pageController.nextPage(
+                duration: Duration(milliseconds: 10),
+                curve: Curves.bounceInOut);
+            },
             textButao: "Eventos",
-            cor: Colors.white,
-            textCor: Color.fromRGBO(250, 30, 78, 1),
-            bordaCor: Color.fromRGBO(250, 30, 78, 1),
+            cor:
+            currentPage > 0.5 ? Color.fromRGBO(250, 30, 78, 1) : Colors.white,
+            textCor:
+            currentPage > 0.5 ? Colors.white : Color.fromRGBO(250, 30, 78, 1),
+            bordaCor: currentPage > 0.5
+              ? Colors.transparent
+              : Color.fromRGBO(250, 30, 78, 1),
           ),
         ),
       ],
