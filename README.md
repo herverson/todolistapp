@@ -1,2 +1,2 @@
 # TodoList App
-App para ADROID e iOS
+App para ANDROID e iOS
