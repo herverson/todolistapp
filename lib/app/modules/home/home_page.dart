@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 import 'package:todolistapp/pages/add_event_page.dart';
 import 'package:todolistapp/pages/add_task_page.dart';
@@ -9,7 +7,6 @@ import 'package:todolistapp/pages/event_page.dart';
 import 'package:todolistapp/pages/task_page.dart';
 import 'package:todolistapp/widgets/custom_button.dart';
 import 'home_controller.dart';
-import 'models/todo_model.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -62,6 +59,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               });
         },
         child: Icon(Icons.add),
+        backgroundColor: Color.fromRGBO(250, 30, 78, 1),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -119,14 +117,14 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 duration: Duration(milliseconds: 500),
                 curve: Curves.bounceInOut);
           },
-          buttonText: "Tasks",
+          buttonText: "Tarefas",
           color:
-              currentPage < 0.5 ? Theme.of(context).accentColor : Colors.white,
+              currentPage < 0.5 ? Color.fromRGBO(250, 30, 78, 1) : Colors.white,
           textColor:
-              currentPage < 0.5 ? Colors.white : Theme.of(context).accentColor,
+              currentPage < 0.5 ? Colors.white : Color.fromRGBO(250, 30, 78, 1),
           borderColor: currentPage < 0.5
               ? Colors.transparent
-              : Theme.of(context).accentColor,
+              : Color.fromRGBO(250, 30, 78, 1),
         )),
         SizedBox(
           width: 32,
@@ -140,47 +138,14 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           },
           buttonText: "Eventos",
           color:
-              currentPage > 0.5 ? Theme.of(context).accentColor : Colors.white,
+              currentPage > 0.5 ? Color.fromRGBO(250, 30, 78, 1) : Colors.white,
           textColor:
-              currentPage > 0.5 ? Colors.white : Theme.of(context).accentColor,
+              currentPage > 0.5 ? Colors.white : Color.fromRGBO(250, 30, 78, 1),
           borderColor: currentPage > 0.5
               ? Colors.transparent
-              : Theme.of(context).accentColor,
+              : Color.fromRGBO(250, 30, 78, 1),
         ))
       ],
-    );
-  }
-
-  _showDialog([TodoModel model]) {
-    model ??= TodoModel();
-
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
-          title: Text(model.title.isEmpty ? 'Adicionar uma nova tarefa' : 'Editar'),
-          content: TextFormField(
-            initialValue: model.title,
-            onChanged: (value) => model.title = value,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Título'
-            ),
-          ),
-          actions: <Widget>[
-            // CustomModalActionButton(
-            //   onClose:() => Modular.to.pop(),
-            //   onSave: () async {
-            //     await controller.save(model);
-            //     Modular.to.pop();
-            //   },
-            // )
-          ],
-        );
-      }
     );
   }
 }

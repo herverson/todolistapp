@@ -17,7 +17,7 @@ class CustomDateTimePicker extends StatelessWidget {
         padding: const EdgeInsets.only(left: 12.0),
         child: Row(
           children: <Widget>[
-            Icon(icon, color: Theme.of(context).accentColor, size: 30),
+            Icon(icon, color: Color.fromRGBO(250, 30, 78, 1), size: 30),
             SizedBox(
               width: 12,
             ),

@@ -20,7 +20,7 @@ class CustomModalActionButton extends StatelessWidget {
         CustomButton(
           onPressed: onSave,
           buttonText: "Salvar",
-          color: Theme.of(context).accentColor,
+          color: Color.fromRGBO(250, 30, 78, 1),
           textColor: Colors.white,
         )
       ],

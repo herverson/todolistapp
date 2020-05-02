@@ -32,44 +32,46 @@ class _AddTaskPageState extends State<AddTaskPage> {
   Widget build(BuildContext context) {
 
     _textTaskControler.clear();
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Center(
-              child: Text(
-            "Adicionar uma nova tarefa",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          )),
-          SizedBox(
-            height: 24,
-          ),
-          CustomTextField(
-              labelText: 'Título', controller: _textTaskControler),
-          SizedBox(height: 12),
-          CustomDateTimePicker(
-            icon: Icons.date_range,
-            onPressed: _pickDate,
-            value: new DateFormat("dd-MM-yyyy").format(_selectedDate),
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          CustomModalActionButton(
-            onClose: () {
-              Navigator.of(context).pop();
-            },
-            onSave: () async{
-              if (_textTaskControler.text == "") {
-                print("data not found");
-              } else {
-                await Modular.get<HomeController>().save(TodoModel(check: false, title: _textTaskControler.text));
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Center(
+                child: Text(
+              "Adicionar uma nova tarefa",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            )),
+            SizedBox(
+              height: 24,
+            ),
+            CustomTextField(
+                labelText: 'Título', controller: _textTaskControler),
+            SizedBox(height: 12),
+            CustomDateTimePicker(
+              icon: Icons.date_range,
+              onPressed: _pickDate,
+              value: new DateFormat("dd-MM-yyyy").format(_selectedDate),
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            CustomModalActionButton(
+              onClose: () {
                 Navigator.of(context).pop();
-              }
-            },
-          )
-        ],
+              },
+              onSave: () async{
+                if (_textTaskControler.text == "") {
+                  print("data not found");
+                } else {
+                  await Modular.get<HomeController>().save(TodoModel(check: false, title: _textTaskControler.text));
+                  Navigator.of(context).pop();
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }
