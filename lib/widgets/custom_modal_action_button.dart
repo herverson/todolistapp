@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'butao_custom.dart';
+
+import 'custom_button.dart';
 
 class CustomModalActionButton extends StatelessWidget {
   final VoidCallback onClose;
@@ -12,15 +13,15 @@ class CustomModalActionButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        ButaoCustom(
+        CustomButton(
           onPressed: onClose,
-          textButao: "Fechar",
+          buttonText: "Fechar",
         ),
-        ButaoCustom(
+        CustomButton(
           onPressed: onSave,
-          textButao: "Salvar",
-          cor: Color.fromRGBO(250, 30, 78, 1),
-          textCor: Colors.white,
+          buttonText: "Salvar",
+          color: Theme.of(context).accentColor,
+          textColor: Colors.white,
         )
       ],
     );
