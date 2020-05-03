@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:intl/intl.dart';
 import 'package:todolistapp/app/modules/home/home_controller.dart';
 import 'package:todolistapp/app/modules/home/models/todo_model.dart';
 import 'package:todolistapp/widgets/custom_button.dart';
-import 'package:todolistapp/widgets/custom_date_time_picker.dart';
 import 'package:todolistapp/widgets/custom_modal_action_button.dart';
-import 'package:todolistapp/widgets/custom_textfield.dart';
 
 class TaskPage extends StatefulWidget {
   @override
@@ -136,9 +133,6 @@ class _TaskPageState extends State<TaskPage> {
                           onPressed: () {
                             Modular.get<HomeController>().delete(data);
                             Navigator.of(context).pop();
-                            // provider
-                            //     .deleteTodoEntries(data.id)
-                            //     .whenComplete(() => Navigator.of(context).pop());
                           },
                           color: Color.fromRGBO(250, 30, 78, 1),
                           textColor: Colors.white,
@@ -189,9 +183,6 @@ class _TaskPageState extends State<TaskPage> {
                             data.check = true;
                             Modular.get<HomeController>().save(data);
                             Navigator.of(context).pop();
-                            // provider
-                            //     .completeTodoEntries(data.id)
-                            //     .whenComplete(() => Navigator.of(context).pop());
                           },
                           color: Color.fromRGBO(250, 30, 78, 1),
                           textColor: Colors.white,
@@ -264,6 +255,49 @@ class _TaskPageState extends State<TaskPage> {
               );
             });
       },
+      onLongPress: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text("Deletar tarefa",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16)),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        Text(data.title),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        // Text(new DateFormat("dd-MM-yyyy").format(data.date)),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        CustomButton(
+                          buttonText: "Deletar",
+                          onPressed: () {
+                            Modular.get<HomeController>().delete(data);
+                            Navigator.of(context).pop();
+                          },
+                          color: Color.fromRGBO(250, 30, 78, 1),
+                          textColor: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+      },
       child: Row(
         children: <Widget>[
               IconButton(
@@ -304,9 +338,6 @@ class _TaskPageState extends State<TaskPage> {
                                     data.check = false;
                                     Modular.get<HomeController>().save(data);
                                     Navigator.of(context).pop();
-                                    // provider
-                                    //     .completeTodoEntries(data.id)
-                                    //     .whenComplete(() => Navigator.of(context).pop());
                                   },
                                   color: Color.fromRGBO(250, 30, 78, 1),
                                   textColor: Colors.white,
